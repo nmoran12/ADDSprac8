@@ -176,7 +176,7 @@ class Heap {
       index = parentPos;
     }
   }
-}
+};
 
   // TO BE IMPLEMENTED
   // Remove an element from the heap
@@ -209,7 +209,7 @@ class Heap {
         heapifyDown(index);
       }
   }
-}
+};
 
 // TO BE IMPLEMENTED
 // Get the minimum element (in this case, the minimum element of the min-heap)
@@ -219,6 +219,6 @@ T getMin() {
   }
 
   return tree[1];
-}
+};
 
 #endif /* Tree_hpp */

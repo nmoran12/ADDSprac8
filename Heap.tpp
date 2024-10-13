@@ -176,7 +176,6 @@ class Heap {
       index = parentPos;
     }
   }
-};
 
   // TO BE IMPLEMENTED
   // Remove an element from the heap
@@ -220,5 +219,5 @@ T getMin() {
 
   return tree[1];
 };
-
+};
 #endif /* Tree_hpp */

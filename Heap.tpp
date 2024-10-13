@@ -169,7 +169,9 @@ class Heap {
     heapIndex index = tree.size() - 1;
     while (index > 1) {
       heapIndex parentPos = getParentPosition(index);
-      if (tree[index] >= tree[parentPos]) break;
+      if (tree[parentPos] <= tree[index]){
+        return;
+      };
       std::swap(tree[index], tree[parentPos]);
       index = parentPos;
     }
@@ -196,7 +198,16 @@ class Heap {
   this->tree.pop_back();
 
   if (index < this->tree.size()) {
-    this->heapifyDown(index);
+    heapIndex parentPos = getParentPosition(index);
+      if (index > 1 && tree[parentPos] > tree[index]){
+        while (index > 1 && tree[parentPos] > tree[index]){
+          std::swap(tree[index], tree[parentPos]);
+          index = parentPos;
+          parentPos = getParentPosition(index);
+        }
+      } else {
+        heapifyDown(index);
+      }
   }
 }
 
@@ -209,7 +220,5 @@ T getMin() {
 
   return tree[1];
 }
-}
-;
 
 #endif /* Tree_hpp */

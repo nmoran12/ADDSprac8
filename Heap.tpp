@@ -12,8 +12,6 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
 template <typename T>
 class Heap {
  private:
@@ -166,26 +164,28 @@ class Heap {
   // TO BE IMPLEMENTED
   // Insert an element into the heap
   void insert(T element) {
-    tree.push_back(element);
+    tree.emplace_back(element);
 
     heapIndex index = tree.size() - 1;
     while (index > 1 && tree[index] < tree[getParentPosition(index)]) {
-      swap(tree[index], tree[getParentPosition(index)]);
-      index = getParentPosition(index);
+      iter_swap(tree.begin() + index, tree.begin() + index / 2);
     }
   }
 
   // TO BE IMPLEMENTED
   // Remove an element from the heap
   void remove(T value) {
-    if (this->tree.size() <= 1) {
-      cerr << "Heap is empty. Please add values." << endl;
+    if (tree.size() <= 1) {
+      std::cout << "The heap is empty so you cannot remove anything from it."
+                << std::endl;
       return;
     }
 
     auto it = find(this->tree.begin() + 1, this->tree.end(), value);
     if (it == this->tree.end()) {
-      cerr << "Value not found in the heap." << endl;
+      std::cout
+          << "The value was not found in the heap. Please try another value"
+          << std::endl;
       return;
     }
 
@@ -202,7 +202,8 @@ class Heap {
   // Get the minimum element (in this case, the minimum element of the min-heap)
   T getMin() {
     if (tree.size() <= 1) {
-      throw runtime_error("heap has no values in it.");
+      throw runtime_error(
+          "The heap has no values in it so there is no minimum value.");
     }
 
     return tree[1];

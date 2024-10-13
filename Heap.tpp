@@ -164,50 +164,52 @@ class Heap {
   // TO BE IMPLEMENTED
   // Insert an element into the heap
   void insert(T element) {
-    tree.emplace_back(element);
+    tree.push_back(element);
 
     heapIndex index = tree.size() - 1;
-    while (index > 1 && tree[index] < tree[getParentPosition(index)]) {
-      iter_swap(tree.begin() + index, tree.begin() + index / 2);
+    while (index > 1) {
+      heapIndex parentPos = getParentPosition(index);
+      if (tree[index] >= tree[parentPos]) break;
+      std::swap(tree[index], tree[parentPos]);
+      index = parentPos;
     }
   }
+}
 
   // TO BE IMPLEMENTED
   // Remove an element from the heap
   void remove(T value) {
-    if (tree.size() <= 1) {
-      std::cout << "The heap is empty so you cannot remove anything from it."
-                << std::endl;
-      return;
-    }
-
-    auto it = find(this->tree.begin() + 1, this->tree.end(), value);
-    if (it == this->tree.end()) {
-      std::cout
-          << "The value was not found in the heap. Please try another value"
-          << std::endl;
-      return;
-    }
-
-    heapIndex index = distance(this->tree.begin(), it);
-    this->tree.at(index) = this->tree.back();
-    this->tree.pop_back();
-
-    if (index < this->tree.size()) {
-      this->heapifyDown(index);
-    }
+  if (this->tree.size() <= 1) {
+    std::cout << "The heap is empty so you cannot remove any values"
+              << std::endl;
+    return;
   }
 
-  // TO BE IMPLEMENTED
-  // Get the minimum element (in this case, the minimum element of the min-heap)
-  T getMin() {
-    if (tree.size() <= 1) {
-      throw runtime_error(
-          "The heap has no values in it so there is no minimum value.");
-    }
-
-    return tree[1];
+  auto iterator = std::find(tree.begin() + 1, tree.end(), value);
+  if (iterator == tree.end()) {
+    std::cout << "The value was not found in the heap" << std::endl;
+    return;
   }
-};
+
+  heapIndex index = std::distance(this->tree.begin(), iterator);
+  this->tree.at(index) = this->tree.back();
+  this->tree.pop_back();
+
+  if (index < this->tree.size()) {
+    this->heapifyDown(index);
+  }
+}
+
+// TO BE IMPLEMENTED
+// Get the minimum element (in this case, the minimum element of the min-heap)
+T getMin() {
+  if (tree.size() <= 1) {
+    throw std::runtime_error("The heap contains no values");
+  }
+
+  return tree[1];
+}
+}
+;
 
 #endif /* Tree_hpp */
